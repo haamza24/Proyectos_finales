@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated   -->
+<!--     by the Xilinx ISE software.  Any direct editing or        -->
+<!--     changes made to this file may result in unpredictable     -->
+<!--     behavior or data corruption.  It is strongly advised that -->
+<!--     users do not edit the contents of this file.              -->
+<!--                                                               -->
+<!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
+
+<messages>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/IO_strobe_logic.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/T_state_and_Reset.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/arithmatic.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/carry_flag_logic.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/encriptador.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/flip.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/generadorAleatorio.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/interrupt_capture.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/interrupt_logic.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/logical_bus_processing.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/picoblaze.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/program_counter.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/programa_helloworld_int_FLIP.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/register_and_flag_enable.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/register_bank.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/shift_rotate.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/stack_counter.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/stack_ram.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/tomy.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/toplevel_helloworld_RAM_Int.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/zero_flag_logic.vhd&quot; into library work</arg>
+</msg>
+
+</messages>
+

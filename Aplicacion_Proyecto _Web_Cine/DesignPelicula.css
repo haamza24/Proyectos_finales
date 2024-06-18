@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(26, 25, 25);
+    color: orangered;
+}
+
+input[type='submit'] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(64, 64, 64);
+    color: orangered;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input[type='submit']:hover {
+    background-color: #7f7f7f;
+}
+
+
+input[type='text'],
+input[type='number'],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: rgb(26, 25, 25);
+    color: orangered;
+}
+
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background-color: rgb(26, 25, 25);
+    color: orangered;
+}
+
+th {
+    background-color: rgb(26, 25, 25);
+    width: 50%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#botonesSuperior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(26, 25, 25);
+    padding: 10px;
+    max-width: 100%;
+}
+
+#botonesSuperior a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#botonesSuperior h1 {
+    text-align: left;
+    margin: 0 auto;
+}
+
+
+
+#volverButton a {
+    text-decoration: none;
+}

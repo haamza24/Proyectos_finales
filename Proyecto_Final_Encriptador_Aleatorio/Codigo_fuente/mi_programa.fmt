@@ -1,0 +1,180 @@
+  1   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  2   0              ;                 
+  3   0              ;Transmision RS-232 por software. 
+  4   0              ;115200bps, 8 data bits, no parity, 1 stop bit, no flow control,
+  5   0              ;parte1: transmite por el puerte serie el contenido de la memoria RAM (64 bytes, portid [0-63])
+  6   0              ;parte2: genera numeros pseudo-aleatorios, bucle contador+interrupcion para transmitir numero.
+  7   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  8   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  9   0              ;declaracion de constantes y variables
+ 10   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  
+ 11   0              :CONSTANT   RS232        FF           ; puerto comunicacion serie es el FF
+ 12   0              ; rx es el bit 0 del puerto FF(entrada)
+ 13   0              ; tx es el bit 7 del puerto FF(salida), esto es porque
+ 14   0              ;el hyperterminal envia primero el LSB, por eso vamos desplazando a la 
+ 15   0              ;izquierda al recibir, y al enviar tambien, con lo que enviamos de nuevo
+ 16   0              ;el LSB primero como corresponde para que lo entienda el hyperterminal
+ 17   0              :NAMEREG    S1           TXREG        ;buffer de transmision
+ 18   0              :NAMEREG    S2           RXREG        ;buffer de recepcion
+ 19   0              :NAMEREG    S3           CONTBIT      ;contador de los 8 bits de datos
+ 20   0              :NAMEREG    S4           CONT1        ;contador de retardo1
+ 21   0              :NAMEREG    S5           CONT2        ;contador de retardo2
+ 22   0              
+ 23   0              
+ 24   0              :NAMEREG    S0           CARACTER     
+ 25   0              :NAMEREG    S6           CARACTER_1   
+ 26   0              :NAMEREG    S7           CARACTER_2   
+ 27   0              
+ 28   0              ;
+ 29   0              :ADDRESS    00           ;el programa se cargara a partir de la dir 00
+ 30   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 31   0              ;Inicio del programa
+ 32   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 33   0              :DISABLE    INTERRUPT    
+ 34   1              
+ 35   1              
+ 36   1              
+ 37   1 START        
+ 38   1              
+ 39   1              
+ 40   1 LOOP_RECIBE  
+ 41   1              :CALL       RECIBE       
+ 42   2              :OUTPUT     RXREG        41           
+ 43   3              
+ 44   3              :INPUT      TXREG        41           ;quiero que lo que hay en la memoria 41 se me imprima por pantalla
+ 45   4              :CALL       TRANSMITE    
+ 46   5              
+ 47   5 LOOP_SALIDA  
+ 48   5              :INPUT      TXREG        42           ;quiero que se imprima por pantalla el resultado final 
+ 49   6              :CALL       TRANSMITE    
+ 50   7              
+ 51   7              :JUMP       START        
+ 52   8              
+ 53   8              
+ 54   8              
+ 55   8              
+ 56   8 PARTE1       :INPUT      TXREG        S7           
+ 57   9              :ADD        TXREG        00           
+ 58   A              :JUMP       Z            PARTE2       
+ 59   B              :CALL       TRANSMITE    
+ 60   C              :ADD        S7           01           
+ 61   D              :JUMP       PARTE1       
+ 62   E              ;Instrucciones para la parte2
+ 63   E PARTE2       :ENABLE     INTERRUPT    
+ 64   F BUCLE1       :LOAD       S6           09           
+ 65  10 BUCLE2       :SUB        S6           01           
+ 66  11              :JUMP       NZ           BUCLE2       
+ 67  12              :LOAD       S6           09           
+ 68  13              :JUMP       BUCLE2       
+ 69  14              
+ 70  14              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 71  14              ;Rutina de recepcion de caracteres
+ 72  14              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 73  14 RECIBE       ;esperamos a que se reciba un bit de inicio
+ 74  14              :INPUT      RXREG        RS232        
+ 75  15              :AND        RXREG        80           
+ 76  16              :JUMP       NZ           RECIBE       
+ 77  17              :CALL       WAIT_05BIT   
+ 78  18              ;almacenamos los 8 bits de datos
+ 79  18              :LOAD       CONTBIT      09           
+ 80  19 NEXT_RX_BIT  :CALL       WAIT_1BIT    
+ 81  1A              :SR0        RXREG        
+ 82  1B              :INPUT      S0           RS232        
+ 83  1C              :AND        S0           80           
+ 84  1D              :OR         RXREG        S0           
+ 85  1E              :SUB        CONTBIT      01           
+ 86  1F              :JUMP       NZ           NEXT_RX_BIT  
+ 87  20              :RETURN     
+ 88  21              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 89  21              ;Rutina de transmision de caracteres
+ 90  21              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 91  21 TRANSMITE    ;enviamos un bit de inicio
+ 92  21              :LOAD       S0           00           
+ 93  22              :OUTPUT     S0           RS232        
+ 94  23              :CALL       WAIT_1BIT    
+ 95  24              ;enviamos los 8 bits de datos
+ 96  24              :LOAD       CONTBIT      08           
+ 97  25 NEXT_TX_BIT  :OUTPUT     TXREG        RS232        
+ 98  26              :CALL       WAIT_1BIT    
+ 99  27              :SR0        TXREG        
+100  28              :SUB        CONTBIT      01           
+101  29              :JUMP       NZ           NEXT_TX_BIT  
+102  2A              ;enviamos un bit de parada
+103  2A              :LOAD       S0           FF           
+104  2B              :OUTPUT     S0           RS232        
+105  2C              :CALL       WAIT_1BIT    
+106  2D              :RETURN     
+107  2E              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+108  2E              ;Rutina espera 1 bit (a 9600bps)
+109  2E              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+110  2E              ;clk=50MHz, 9600bps, cont1=0A, cont2=80
+111  2E              ;esta rutina ejecuta 1 + (1 + 10*(1 + 128*2 + 2)) + 1 = 2593 instruciones,
+112  2E              ;aproximandose al numero teorico de (104,16us/bit)/(0,04 us/instruc) = 2604,166 instr/bit necesarias.
+113  2E              ;clk=40MHz, 57600bps, cont1=05, cont2=21
+114  2E              ;esta rutina ejecuta 1 + (1 + 5*(1 + 33*2 + 2)) + 1 =  instruciones,
+115  2E              ;aproximandose al numero teorico de (17,36us/bit)/(0,05 us/instruc) = 347,2 instr/bit necesarias.
+116  2E              ;clk=50MHz, 115200bps, cont1=03, cont2=22
+117  2E              ;esta rutina ejecuta 1 + (1 + 3*(1 + 34*2 + 2)) + 1 = 216 instruciones,
+118  2E              ;aproximandose al numero teorico de (8,68us/bit)/(0,04 us/instruc) = 217 instr/bit necesarias.
+119  2E              ;clk=50MHz, 230400bps, cont1= 03, cont2= 10
+120  2E              ;esta rutina ejecuta 1 + (1 + 3*(1 + 16*2 + 2)) + 1 = 108 instruciones,
+121  2E              ;aproximandose al numero teorico de (4,34us/bit)/(0,04 us/instruc) = 108,5 instr/bit necesarias.
+122  2E              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+123  2E              ;OJO: con el USB2COM no he conseguido pasar de los 230400bps bien. 
+124  2E              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+125  2E              ;clk=50MHz, 460800bps, cont1= 03, cont2=06 OJO:Hay que ponerle 1 menos a cont2 y que tome 
+126  2E              ;caracteres ascii de 7 bits para que funcione.
+127  2E              ;esta rutina ejecuta 1 + (1 + 3*(1 + 7*2 + 2)) + 1 = 54 instruciones,
+128  2E              ;aproximandose al numero teorico de (2,17us/bit)/(0,04 us/instruc) = 54,25 instr/bit necesarias.
+129  2E              ;clk=50MHz, 921600bps, cont1=01, cont2=0A NO FUNCIONA
+130  2E              ;esta rutina ejecuta 1 + (1 + 1*(1 + 10*2 + 2)) + 1 = 26 instruciones,
+131  2E              ;aproximandose al numero teorico de (1,085us/bit)/(0,04 us/instruc) = 27,127 instr/bit necesarias.
+132  2E WAIT_1BIT    :LOAD       CONT1        03           
+133  2F ESPERA2      :LOAD       CONT2        22           
+134  30 ESPERA1      :SUB        CONT2        01           
+135  31              :JUMP       NZ           ESPERA1      
+136  32              :SUB        CONT1        01           
+137  33              :JUMP       NZ           ESPERA2      
+138  34              :RETURN     
+139  35              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+140  35              ;Rutina espera 0,5 bits (bit de inicio, a 9600bps)
+141  35              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+142  35              ;clk=50MHz, 9600bps, cont1=05, cont2=80
+143  35              ;1 + (1 + 5*(1 + 128*2 + 2)) + 1 = 1298; aprox = 1302
+144  35              ;clk=40MHz, 57600bps, cont1=03, cont2=1B
+145  35              ;1 + (1 + 3*(1 + 27*2 + 2)) + 1 = 1298; aprox = 173.6
+146  35              ;clk=50MHz, 115200bps, cont1=03, cont2=10
+147  35              ;1 + (1 + 3*(1 + 16*2 + 2)) + 1 = 108; aprox = 108.5
+148  35              ;clk=50MHz, 230400bps, cont1= 03, cont2= 07
+149  35              ;1 + (1 + 3*(1 + 7*2 + 2)) + 1 = 54; aprox = 54,25
+150  35              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+151  35              ;OJO: con el USB2COM no he conseguido pasar de los 230400bps bien. 
+152  35              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+153  35              ;clk=50MHz, 460800bps, cont1= 01, cont2= 0A
+154  35              ;1 + (1 + 1*(1 + 10*2 + 2)) + 1 = 26; aprox = 27,125
+155  35              ;clk=50MHz, 921600bps, cont1=01, cont2=04 NO FUNCIONA
+156  35              ;1 + (1 + 1*(1 + 4*2 + 2)) + 1 = 14; aprox = 13,56
+157  35 WAIT_05BIT   :LOAD       CONT1        03           
+158  36 ESPERA4      :LOAD       CONT2        10           
+159  37 ESPERA3      :SUB        CONT2        01           
+160  38              :JUMP       NZ           ESPERA3      
+161  39              :SUB        CONT1        01           
+162  3A              :JUMP       NZ           ESPERA4      
+163  3B              :RETURN     
+164  3C              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+165  3C              ; FIN
+166  3C              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+167  3C              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+168  3C              ; RUTINA DE ATENCION A LA INTERRUPCIÓN
+169  3C              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+170  3C INTERRUP     :DISABLE    INTERRUPT    
+171  3D              :CALL       RECIBE       
+172  3E              :FLIP       RXREG        
+173  3F              :LOAD       TXREG        RXREG        
+174  40              :CALL       TRANSMITE    
+175  41              :ADD        S6           30           
+176  42              :LOAD       TXREG        S6           
+177  43              :CALL       TRANSMITE    
+178  44              :RETURNI    ENABLE       
+179  FF              :ADDRESS    FF           
+180  FF              :JUMP       INTERRUP     

@@ -1,0 +1,472 @@
+  1   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  2   0              ;                 
+  3   0              ;Transmision RS-232 por software. 
+  4   0              ;115200bps, 8 data bits, no parity, 1 stop bit, no flow control,
+  5   0              ;parte1: transmite por el puerte serie el contenido de la memoria RAM (64 bytes, portid [0-63])
+  6   0              ;parte2: genera numeros pseudo-aleatorios, bucle contador+interrupcion para transmitir numero.
+  7   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  8   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  9   0              ;declaracion de constantes y variables
+ 10   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  
+ 11   0              :CONSTANT   RS232        FF           ; puerto comunicacion serie es el FF
+ 12   0              ; rx es el bit 0 del puerto FF(entrada)
+ 13   0              ; tx es el bit 7 del puerto FF(salida), esto es porque
+ 14   0              ;el hyperterminal envia primero el LSB, por eso vamos desplazando a la 
+ 15   0              ;izquierda al recibir, y al enviar tambien, con lo que enviamos de nuevo
+ 16   0              ;el LSB primero como corresponde para que lo entienda el hyperterminal
+ 17   0              :NAMEREG    S1           TXREG        ;buffer de transmision
+ 18   0              :NAMEREG    S2           RXREG        ;buffer de recepcion
+ 19   0              :NAMEREG    S3           CONTBIT      ;contador de los 8 bits de datos
+ 20   0              :NAMEREG    S4           CONT1        ;contador de retardo1
+ 21   0              :NAMEREG    S5           CONT2        ;contador de retardo2
+ 22   0              ;
+ 23   0              :ADDRESS    00           ;el programa se cargara a partir de la dir 00
+ 24   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 25   0              ;Inicio del programa
+ 26   0              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 27   0              :DISABLE    INTERRUPT    
+ 28   1 START        
+ 29   1              :CALL       RECIBE       
+ 30   2              :OUTPUT     RXREG        47           
+ 31   3              :LOAD       TXREG        RXREG        
+ 32   4              :CALL       TRANSMITE    ; para imprimir por pantalla el primer dato que envia el usuario
+ 33   5              
+ 34   5              :LOAD       S0           RXREG        ;guardo lo que he recebido en el s0, porque rxreg se machaca con la resta (propiedad sub)
+ 35   6              :SUB        RXREG        2A           ;si recibimos un * por el 47
+ 36   7              :JUMP       NZ           CLAVE        ; si  hemos recibido un * maquina de estados:
+ 37   8              
+ 38   8              :CALL       PEDIR_CLAVE  
+ 39   9              
+ 40   9              
+ 41   9              :CALL       RECIBE       ;clave 1
+ 42   A              :OUTPUT     RXREG        41           
+ 43   B              :LOAD       TXREG        RXREG        
+ 44   C              :CALL       TRANSMITE    
+ 45   D              
+ 46   D              
+ 47   D              
+ 48   D              :CALL       RECIBE       ;clave 2
+ 49   E              :OUTPUT     RXREG        42           
+ 50   F              :LOAD       TXREG        RXREG        
+ 51  10              :CALL       TRANSMITE    
+ 52  11              
+ 53  11              :CALL       RETORNO      
+ 54  12              
+ 55  12 DATO         
+ 56  12              
+ 57  12              
+ 58  12              
+ 59  12              :CALL       RETORNO      
+ 60  13              :CALL       PEDIR_DATO   
+ 61  14              
+ 62  14              :CALL       RECIBE       ;Dato
+ 63  15              :OUTPUT     RXREG        43           
+ 64  16              :LOAD       TXREG        RXREG        
+ 65  17              :CALL       TRANSMITE    
+ 66  18              
+ 67  18              
+ 68  18              
+ 69  18              :CALL       RECIBE       ; Mete el # c que me permite ir desde el estado CLAVE al estado de CONTROL
+ 70  19              :OUTPUT     RXREG        44           
+ 71  1A              :LOAD       TXREG        RXREG        
+ 72  1B              :CALL       TRANSMITE    
+ 73  1C              
+ 74  1C              
+ 75  1C              :CALL       RECIBE       ; Mete o un + o un - un 1 o 2
+ 76  1D              :OUTPUT     RXREG        44           
+ 77  1E              :LOAD       TXREG        RXREG        
+ 78  1F              :CALL       TRANSMITE    
+ 79  20              
+ 80  20              :CALL       RETORNO      
+ 81  21              :CALL       SALIDA       
+ 82  22              
+ 83  22              :INPUT      TXREG        50           ;quiero que se imprima por pantalla el resultado final 
+ 84  23              :CALL       TRANSMITE    
+ 85  24              
+ 86  24              :CALL       RETORNO      
+ 87  25              
+ 88  25              :JUMP       START        
+ 89  26              
+ 90  26 CLAVE        ; Aqui llegamos si hemos recibido algo distinto de *
+ 91  26              
+ 92  26              :SUB        S0           72           ;la resta se hace con el valor que se metio al principio de todo (por estar aqui es qu es!=r)
+ 93  27              :JUMP       NZ           CLAVE        
+ 94  28              ;la rutina de abajo se ejecuta si s0 es r
+ 95  28              
+ 96  28              
+ 97  28              :INPUT      TXREG        61           
+ 98  29              :OUTPUT     TXREG        41           
+ 99  2A              :CALL       TRANSMITE    
+100  2B              
+101  2B              
+102  2B              :INPUT      TXREG        62           
+103  2C              :OUTPUT     TXREG        42           
+104  2D              :CALL       TRANSMITE    
+105  2E              
+106  2E              :CALL       DATO         
+107  2F              
+108  2F              
+109  2F              
+110  2F              
+111  2F              
+112  2F              
+113  2F              
+114  2F              
+115  2F              
+116  2F              
+117  2F              
+118  2F              
+119  2F              
+120  2F              
+121  2F              
+122  2F PEDIR_CLAVE  
+123  2F              ; Display "Introduce Clave" on the screen
+124  2F              :LOAD       S0           49           ; Load ASCII code for 'I'
+125  30              :LOAD       TXREG        S0           ; Transmit 'I'
+126  31              :CALL       TRANSMITE    ; Wait for 1 bit
+127  32              
+128  32              :LOAD       S0           6E           ; Load ASCII code for 'n'
+129  33              :LOAD       TXREG        S0           ; Transmit 'n'
+130  34              :CALL       TRANSMITE    ; Wait for 1 bit
+131  35              
+132  35              :LOAD       S0           74           ; Load ASCII code for 't'
+133  36              :LOAD       TXREG        S0           ; Transmit 't'
+134  37              :CALL       TRANSMITE    ; Wait for 1 bit
+135  38              
+136  38              :LOAD       S0           72           ; Load ASCII code for 'r'
+137  39              :LOAD       TXREG        S0           ; Transmit 'r'
+138  3A              :CALL       TRANSMITE    ; Wait for 1 bit
+139  3B              
+140  3B              :LOAD       S0           6F           ; Load ASCII code for 'o'
+141  3C              :LOAD       TXREG        S0           ; Transmit 'o'
+142  3D              :CALL       TRANSMITE    ; Wait for 1 bit
+143  3E              
+144  3E              :LOAD       S0           64           ; Load ASCII code for 'd'
+145  3F              :LOAD       TXREG        S0           ; Transmit 'd'
+146  40              :CALL       TRANSMITE    ; Wait for 1 bit
+147  41              
+148  41              :LOAD       S0           75           ; Load ASCII code for 'u'
+149  42              :LOAD       TXREG        S0           ; Transmit 'u'
+150  43              :CALL       TRANSMITE    ; Wait for 1 bit
+151  44              
+152  44              :LOAD       S0           63           ; Load ASCII code for 'c'
+153  45              :LOAD       TXREG        S0           ; Transmit 'c'
+154  46              :CALL       TRANSMITE    ; Wait for 1 bit
+155  47              
+156  47              :LOAD       S0           65           ; Load ASCII code for 'e'
+157  48              :LOAD       TXREG        S0           ; Transmit 'e'
+158  49              :CALL       TRANSMITE    ; Wait for 1 bit
+159  4A              
+160  4A              :LOAD       S0           20           ; Load ASCII code for space
+161  4B              :LOAD       TXREG        S0           ; Transmit space
+162  4C              :CALL       TRANSMITE    ; Wait for 1 bit
+163  4D              
+164  4D              :LOAD       S0           63           ; Load ASCII code for 'C'
+165  4E              :LOAD       TXREG        S0           ; Transmit 'C'
+166  4F              :CALL       TRANSMITE    ; Wait for 1 bit
+167  50              
+168  50              :LOAD       S0           6C           ; Load ASCII code for 'l'
+169  51              :LOAD       TXREG        S0           ; Transmit 'l'
+170  52              :CALL       TRANSMITE    ; Wait for 1 bit
+171  53              
+172  53              :LOAD       S0           61           ; Load ASCII code for 'a'
+173  54              :LOAD       TXREG        S0           ; Transmit 'a'
+174  55              :CALL       TRANSMITE    ; Wait for 1 bit
+175  56              
+176  56              :LOAD       S0           76           ; Load ASCII code for 'v'
+177  57              :LOAD       TXREG        S0           ; Transmit 'v'
+178  58              :CALL       TRANSMITE    ; Wait for 1 bit
+179  59              
+180  59              :LOAD       S0           65           ; Load ASCII code for 'e'
+181  5A              :LOAD       TXREG        S0           ; Transmit 'e'
+182  5B              :CALL       TRANSMITE    ; Wait for 1 bit
+183  5C              
+184  5C              :LOAD       S0           3A           ; Load ASCII code for 'e'
+185  5D              :LOAD       TXREG        S0           ; Transmit 'e'
+186  5E              :CALL       TRANSMITE    ; Wait for 1 bit
+187  5F              
+188  5F              :LOAD       S0           20           ; Load ASCII code for 'e'
+189  60              :LOAD       TXREG        S0           ; Transmit 'e'
+190  61              :CALL       TRANSMITE    ; Wait for 1 bi
+191  62              
+192  62              
+193  62              
+194  62              :RETURN     
+195  63              
+196  63              
+197  63              
+198  63              
+199  63              
+200  63 PEDIR_DATO   
+201  63              
+202  63              :LOAD       S0           49           ; Load ASCII code for 'I'
+203  64              :LOAD       TXREG        S0           ; Transmit 'I'
+204  65              :CALL       TRANSMITE    ; Wait for 1 bit
+205  66              
+206  66              :LOAD       S0           6E           ; Load ASCII code for 'n'
+207  67              :LOAD       TXREG        S0           ; Transmit 'n'
+208  68              :CALL       TRANSMITE    ; Wait for 1 bit
+209  69              
+210  69              :LOAD       S0           74           ; Load ASCII code for 't'
+211  6A              :LOAD       TXREG        S0           ; Transmit 't'
+212  6B              :CALL       TRANSMITE    ; Wait for 1 bit
+213  6C              
+214  6C              :LOAD       S0           72           ; Load ASCII code for 'r'
+215  6D              :LOAD       TXREG        S0           ; Transmit 'r'
+216  6E              :CALL       TRANSMITE    ; Wait for 1 bit
+217  6F              
+218  6F              :LOAD       S0           6F           ; Load ASCII code for 'o'
+219  70              :LOAD       TXREG        S0           ; Transmit 'o'
+220  71              :CALL       TRANSMITE    ; Wait for 1 bit
+221  72              
+222  72              :LOAD       S0           64           ; Load ASCII code for 'd'
+223  73              :LOAD       TXREG        S0           ; Transmit 'd'
+224  74              :CALL       TRANSMITE    ; Wait for 1 bit
+225  75              
+226  75              :LOAD       S0           75           ; Load ASCII code for 'u'
+227  76              :LOAD       TXREG        S0           ; Transmit 'u'
+228  77              :CALL       TRANSMITE    ; Wait for 1 bit
+229  78              
+230  78              :LOAD       S0           63           ; Load ASCII code for 'c'
+231  79              :LOAD       TXREG        S0           ; Transmit 'c'
+232  7A              :CALL       TRANSMITE    ; Wait for 1 bit
+233  7B              
+234  7B              :LOAD       S0           65           ; Load ASCII code for 'e'
+235  7C              :LOAD       TXREG        S0           ; Transmit 'e'
+236  7D              :CALL       TRANSMITE    ; Wait for 1 bit
+237  7E              
+238  7E              :LOAD       S0           20           ; Load ASCII code for space
+239  7F              :LOAD       TXREG        S0           ; Transmit space
+240  80              :CALL       TRANSMITE    ; Wait for 1 bit
+241  81              
+242  81              :LOAD       S0           64           ; Load ASCII code for 'C'
+243  82              :LOAD       TXREG        S0           ; Transmit 'C'
+244  83              :CALL       TRANSMITE    ; Wait for 1 bit
+245  84              
+246  84              :LOAD       S0           61           ; Load ASCII code for 'l'
+247  85              :LOAD       TXREG        S0           ; Transmit 'l'
+248  86              :CALL       TRANSMITE    ; Wait for 1 bit
+249  87              
+250  87              :LOAD       S0           74           ; Load ASCII code for 'a'
+251  88              :LOAD       TXREG        S0           ; Transmit 'a'
+252  89              :CALL       TRANSMITE    ; Wait for 1 bit
+253  8A              
+254  8A              :LOAD       S0           6F           ; Load ASCII code for 'v'
+255  8B              :LOAD       TXREG        S0           ; Transmit 'v'
+256  8C              :CALL       TRANSMITE    ; Wait for 1 bit
+257  8D              
+258  8D              :LOAD       S0           3A           ; Load ASCII code for 'e'
+259  8E              :LOAD       TXREG        S0           ; Transmit 'e'
+260  8F              :CALL       TRANSMITE    ; Wait for 1 bit
+261  90              
+262  90              :LOAD       S0           20           ; Load ASCII code for 'e'
+263  91              :LOAD       TXREG        S0           ; Transmit 'e'
+264  92              :CALL       TRANSMITE    ; Wait for 1 bi
+265  93              
+266  93              
+267  93              
+268  93              :RETURN     
+269  94              
+270  94 RETORNO      
+271  94              
+272  94              
+273  94              :LOAD       S0           0A           ; Load ASCII code for 'e'
+274  95              :LOAD       TXREG        S0           ; Transmit 'e'
+275  96              :CALL       TRANSMITE    ; Wait for 1 bi
+276  97              
+277  97              :LOAD       S0           0D           ; Load ASCII code for 'e'
+278  98              :LOAD       TXREG        S0           ; Transmit 'e'
+279  99              :CALL       TRANSMITE    ; Wait for 1 bi
+280  9A              
+281  9A              
+282  9A              :RETURN     
+283  9B              
+284  9B              
+285  9B              
+286  9B              
+287  9B              
+288  9B SALIDA       
+289  9B              
+290  9B              :LOAD       S0           54           ; Load ASCII code for 'e'
+291  9C              :LOAD       TXREG        S0           ; Transmit 'e'
+292  9D              :CALL       TRANSMITE    ; Wait for 1 bi
+293  9E              
+294  9E              :LOAD       S0           75           ; Load ASCII code for 'e'
+295  9F              :LOAD       TXREG        S0           ; Transmit 'e'
+296  A0              :CALL       TRANSMITE    ; Wait for 1 bi
+297  A1              
+298  A1              
+299  A1              :LOAD       S0           20           ; Load ASCII code for 'e'
+300  A2              :LOAD       TXREG        S0           ; Transmit 'e'
+301  A3              :CALL       TRANSMITE    ; Wait for 1 bi
+302  A4              
+303  A4              :LOAD       S0           64           ; Load ASCII code for 'e'
+304  A5              :LOAD       TXREG        S0           ; Transmit 'e'
+305  A6              :CALL       TRANSMITE    ; Wait for 1 bi
+306  A7              
+307  A7              :LOAD       S0           61           ; Load ASCII code for 'e'
+308  A8              :LOAD       TXREG        S0           ; Transmit 'e'
+309  A9              :CALL       TRANSMITE    ; Wait for 1 bi
+310  AA              
+311  AA              :LOAD       S0           74           ; Load ASCII code for 'e'
+312  AB              :LOAD       TXREG        S0           ; Transmit 'e'
+313  AC              :CALL       TRANSMITE    ; Wait for 1 bi
+314  AD              
+315  AD              :LOAD       S0           6F           ; Load ASCII code for 'e'
+316  AE              :LOAD       TXREG        S0           ; Transmit 'e'
+317  AF              :CALL       TRANSMITE    ; Wait for 1 bi
+318  B0              
+319  B0              :LOAD       S0           20           ; Load ASCII code for 'e'
+320  B1              :LOAD       TXREG        S0           ; Transmit 'e'
+321  B2              :CALL       TRANSMITE    ; Wait for 1 bi
+322  B3              
+323  B3              :LOAD       S0           65           ; Load ASCII code for 'e'
+324  B4              :LOAD       TXREG        S0           ; Transmit 'e'
+325  B5              :CALL       TRANSMITE    ; Wait for 1 bi
+326  B6              
+327  B6              :LOAD       S0           73           ; Load ASCII code for 'e'
+328  B7              :LOAD       TXREG        S0           ; Transmit 'e'
+329  B8              :CALL       TRANSMITE    ; Wait for 1 bi
+330  B9              
+331  B9              :LOAD       S0           3A           ; Load ASCII code for 'e'
+332  BA              :LOAD       TXREG        S0           ; Transmit 'e'
+333  BB              :CALL       TRANSMITE    ; Wait for 1 bi
+334  BC              
+335  BC              :LOAD       S0           20           ; Load ASCII code for 'e'
+336  BD              :LOAD       TXREG        S0           ; Transmit 'e'
+337  BE              :CALL       TRANSMITE    ; Wait for 1 bi
+338  BF              
+339  BF              
+340  BF              
+341  BF              
+342  BF              
+343  BF              :RETURN     
+344  C0              
+345  C0              
+346  C0              
+347  C0 PARTE1       :INPUT      TXREG        S7           
+348  C1              :ADD        TXREG        00           
+349  C2              :JUMP       Z            PARTE2       
+350  C3              :CALL       TRANSMITE    
+351  C4              :ADD        S7           01           
+352  C5              :JUMP       PARTE1       
+353  C6              ;Instrucciones para la parte2
+354  C6 PARTE2       :ENABLE     INTERRUPT    
+355  C7 BUCLE1       :LOAD       S6           09           
+356  C8 BUCLE2       :SUB        S6           01           
+357  C9              :JUMP       NZ           BUCLE2       
+358  CA              :LOAD       S6           09           
+359  CB              :JUMP       BUCLE2       
+360  CC              
+361  CC              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+362  CC              ;Rutina de recepcion de caracteres
+363  CC              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+364  CC RECIBE       ;esperamos a que se reciba un bit de inicio
+365  CC              :INPUT      RXREG        RS232        
+366  CD              :AND        RXREG        80           
+367  CE              :JUMP       NZ           RECIBE       
+368  CF              :CALL       WAIT_05BIT   
+369  D0              ;almacenamos los 8 bits de datos
+370  D0              :LOAD       CONTBIT      09           
+371  D1 NEXT_RX_BIT  :CALL       WAIT_1BIT    
+372  D2              :SR0        RXREG        
+373  D3              :INPUT      S0           RS232        
+374  D4              :AND        S0           80           
+375  D5              :OR         RXREG        S0           
+376  D6              :SUB        CONTBIT      01           
+377  D7              :JUMP       NZ           NEXT_RX_BIT  
+378  D8              :RETURN     
+379  D9              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+380  D9              ;Rutina de transmision de caracteres
+381  D9              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+382  D9 TRANSMITE    ;enviamos un bit de inicio
+383  D9              :LOAD       S0           00           
+384  DA              :OUTPUT     S0           RS232        
+385  DB              :CALL       WAIT_1BIT    
+386  DC              ;enviamos los 8 bits de datos
+387  DC              :LOAD       CONTBIT      08           
+388  DD NEXT_TX_BIT  :OUTPUT     TXREG        RS232        
+389  DE              :CALL       WAIT_1BIT    
+390  DF              :SR0        TXREG        
+391  E0              :SUB        CONTBIT      01           
+392  E1              :JUMP       NZ           NEXT_TX_BIT  
+393  E2              ;enviamos un bit de parada
+394  E2              :LOAD       S0           FF           
+395  E3              :OUTPUT     S0           RS232        
+396  E4              :CALL       WAIT_1BIT    
+397  E5              :RETURN     
+398  E6              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+399  E6              ;Rutina espera 1 bit (a 9600bps)
+400  E6              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+401  E6              ;clk=50MHz, 9600bps, cont1=0A, cont2=80
+402  E6              ;esta rutina ejecuta 1 + (1 + 10*(1 + 128*2 + 2)) + 1 = 2593 instruciones,
+403  E6              ;aproximandose al numero teorico de (104,16us/bit)/(0,04 us/instruc) = 2604,166 instr/bit necesarias.
+404  E6              ;clk=40MHz, 57600bps, cont1=05, cont2=21
+405  E6              ;esta rutina ejecuta 1 + (1 + 5*(1 + 33*2 + 2)) + 1 =  instruciones,
+406  E6              ;aproximandose al numero teorico de (17,36us/bit)/(0,05 us/instruc) = 347,2 instr/bit necesarias.
+407  E6              ;clk=50MHz, 115200bps, cont1=03, cont2=22
+408  E6              ;esta rutina ejecuta 1 + (1 + 3*(1 + 34*2 + 2)) + 1 = 216 instruciones,
+409  E6              ;aproximandose al numero teorico de (8,68us/bit)/(0,04 us/instruc) = 217 instr/bit necesarias.
+410  E6              ;clk=50MHz, 230400bps, cont1= 03, cont2= 10
+411  E6              ;esta rutina ejecuta 1 + (1 + 3*(1 + 16*2 + 2)) + 1 = 108 instruciones,
+412  E6              ;aproximandose al numero teorico de (4,34us/bit)/(0,04 us/instruc) = 108,5 instr/bit necesarias.
+413  E6              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+414  E6              ;OJO: con el USB2COM no he conseguido pasar de los 230400bps bien. 
+415  E6              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+416  E6              ;clk=50MHz, 460800bps, cont1= 03, cont2=06 OJO:Hay que ponerle 1 menos a cont2 y que tome 
+417  E6              ;caracteres ascii de 7 bits para que funcione.
+418  E6              ;esta rutina ejecuta 1 + (1 + 3*(1 + 7*2 + 2)) + 1 = 54 instruciones,
+419  E6              ;aproximandose al numero teorico de (2,17us/bit)/(0,04 us/instruc) = 54,25 instr/bit necesarias.
+420  E6              ;clk=50MHz, 921600bps, cont1=01, cont2=0A NO FUNCIONA
+421  E6              ;esta rutina ejecuta 1 + (1 + 1*(1 + 10*2 + 2)) + 1 = 26 instruciones,
+422  E6              ;aproximandose al numero teorico de (1,085us/bit)/(0,04 us/instruc) = 27,127 instr/bit necesarias.
+423  E6 WAIT_1BIT    :LOAD       CONT1        03           
+424  E7 ESPERA2      :LOAD       CONT2        22           
+425  E8 ESPERA1      :SUB        CONT2        01           
+426  E9              :JUMP       NZ           ESPERA1      
+427  EA              :SUB        CONT1        01           
+428  EB              :JUMP       NZ           ESPERA2      
+429  EC              :RETURN     
+430  ED              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+431  ED              ;Rutina espera 0,5 bits (bit de inicio, a 9600bps)
+432  ED              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+433  ED              ;clk=50MHz, 9600bps, cont1=05, cont2=80
+434  ED              ;1 + (1 + 5*(1 + 128*2 + 2)) + 1 = 1298; aprox = 1302
+435  ED              ;clk=40MHz, 57600bps, cont1=03, cont2=1B
+436  ED              ;1 + (1 + 3*(1 + 27*2 + 2)) + 1 = 1298; aprox = 173.6
+437  ED              ;clk=50MHz, 115200bps, cont1=03, cont2=10
+438  ED              ;1 + (1 + 3*(1 + 16*2 + 2)) + 1 = 108; aprox = 108.5
+439  ED              ;clk=50MHz, 230400bps, cont1= 03, cont2= 07
+440  ED              ;1 + (1 + 3*(1 + 7*2 + 2)) + 1 = 54; aprox = 54,25
+441  ED              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+442  ED              ;OJO: con el USB2COM no he conseguido pasar de los 230400bps bien. 
+443  ED              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+444  ED              ;clk=50MHz, 460800bps, cont1= 01, cont2= 0A
+445  ED              ;1 + (1 + 1*(1 + 10*2 + 2)) + 1 = 26; aprox = 27,125
+446  ED              ;clk=50MHz, 921600bps, cont1=01, cont2=04 NO FUNCIONA
+447  ED              ;1 + (1 + 1*(1 + 4*2 + 2)) + 1 = 14; aprox = 13,56
+448  ED WAIT_05BIT   :LOAD       CONT1        03           
+449  EE ESPERA4      :LOAD       CONT2        10           
+450  EF ESPERA3      :SUB        CONT2        01           
+451  F0              :JUMP       NZ           ESPERA3      
+452  F1              :SUB        CONT1        01           
+453  F2              :JUMP       NZ           ESPERA4      
+454  F3              :RETURN     
+455  F4              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+456  F4              ; FIN
+457  F4              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+458  F4              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+459  F4              ; RUTINA DE ATENCION A LA INTERRUPCIÓN
+460  F4              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+461  F4 INTERRUP     :DISABLE    INTERRUPT    
+462  F5              :CALL       RECIBE       
+463  F6              :FLIP       RXREG        
+464  F7              :LOAD       TXREG        RXREG        
+465  F8              :CALL       TRANSMITE    
+466  F9              :ADD        S6           30           
+467  FA              :LOAD       TXREG        S6           
+468  FB              :CALL       TRANSMITE    
+469  FC              :RETURNI    ENABLE       
+470  FF              :ADDRESS    FF           
+471  FF              :JUMP       INTERRUP     
+472 100              

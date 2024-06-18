@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\hamza\Desktop\PROYECTO ARQUITECTURA\Proyecto_Final_Encriptador_Aleatorio\Proyecto_Final_Encriptador_Aleatorio\toplevel.ncd
+OUTFILE=C:\Users\hamza\Desktop\PROYECTO ARQUITECTURA\Proyecto_Final_Encriptador_Aleatorio\Proyecto_Final_Encriptador_Aleatorio\toplevel.bit
+FAMILY=Spartan3E
+PART=xc3s500e-4fg320
+WORKINGDIR=C:\Users\hamza\Desktop\PROYECTO ARQUITECTURA\Proyecto_Final_Encriptador_Aleatorio\Proyecto_Final_Encriptador_Aleatorio
+LICENSE=WebPack
+USER_INFO=211949139_0_0_132

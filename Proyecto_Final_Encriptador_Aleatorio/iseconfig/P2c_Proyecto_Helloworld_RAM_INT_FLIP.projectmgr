@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--This is an ISE project configuration file.-->
+<!--It holds project specific layout data for the projectmgr plugin.-->
+<!--Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.-->
+<Project version="2" owner="projectmgr" name="P2c_Proyecto_Helloworld_RAM_INT_FLIP" >
+   <!--This is an ISE project configuration file.-->
+   <ItemView engineview="SynthesisOnly" guiview="Source" compilemode="AutoCompile" >
+      <ClosedNodes>
+         <ClosedNodesVersion>2</ClosedNodesVersion>
+         <ClosedNode>/toplevel - behavioral C:|Users|DETCP|Desktop|Proyecto Encriptador_Final|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|DETCP|Desktop|Proyecto Encriptador_IdeaHAMZA 24.11.2023|Proyecto Encriptador_IdeaHAMZA 24.11.2023|Proyecto_Enriptado_TOMAS_TARDE|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|DETCP|Desktop|Proyecto Encriptador_IdeaTomas_tarde|Proyecto_Enriptado_TOMAS_TARDE|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|DETCP|Desktop|Proyecto Encriptador_IdeaTomas|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|detcp|Desktop|prueba|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|AJAHASJHAS|Faltan por funcionar|Maquina 2 estados|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|AJAHASJHAS|prueba.2|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto Encriptador_Final_IdeaTomas|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio_Instruccion|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio_Instruccion|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/arithmetic_group - arithmetic_process - low_level_definition</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio_Instruccion|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/data_registers - register_bank - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio_Instruccion|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/stack_memory - stack_ram - low_level_definition</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/arithmetic_group - arithmetic_process - low_level_definition</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/data_registers - register_bank - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyecto_Final_Encriptador_Aleatorio|Proyecto_Final_Encriptador_Aleatorio|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral/stack_memory - stack_ram - low_level_definition</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|PROYECTO ARQUITECTURA|Proyectos en desarrollo|TardeTOMAS|Proyecto Encriptador_IdeaTomas_tarde|Proyecto_Enriptado_TOMAS_TARDE|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|Proyecto Encriptador TYH(desarrollo Instruccion)|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|ARQUITECTURAS|PROYECTO ARQUITECTURA HAMZA Y TOMAS|PROYECTO ENCRIPTADOR HAMZA Y TOMAS|Proyecto Encriptador TYH|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|ARQUITECTURAS|PROYECTO ARQUITECTURA HAMZA Y TOMAS|ProyectoFinalTomasHamza(Funciona)|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|ARQUITECTURAS|PROYECTO ARQUITECTURA HAMZA Y TOMAS|ProyectoFinalTomasHamza(ModificacionProfesor)|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|PROYECTO ARQUITECTURA HAMZA Y TOMAS|PROYECTO_ENCRIPTADOR|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|prueba|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Users|hamza|Desktop|UNIVERSIDAD 2023|prueba|PROYECTO_ENCRIPTADOR|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral C:|Xilinx|Practicas_4AHC|Practica2_Picoblaze|P2c_Picoblaze_Helloworld_RAM_INT_FLIP|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral E:|Maquina 2 estados (Encrip y Desencript)|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+         <ClosedNode>/toplevel - behavioral F:|Maquina 2 estados (Encrip y Desencript)|PROYECTO PRUEBA|P2c_Proyecto_Helloworld_RAM_INT_FLIP|toplevel_helloworld_RAM_Int.vhd/processor - picoblaze - Behavioral</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem>encriptador1 - encriptador - Behavioral (C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/encriptador.vhd)</SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000004fa000000020000000000000000000000000200000064ffffffff000000810000000300000002000004fa0000000100000003000000000000000100000003</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
+      <CurrentItem>encriptador1 - encriptador - Behavioral (C:/Users/hamza/Desktop/PROYECTO ARQUITECTURA/Proyecto_Final_Encriptador_Aleatorio_Instruccion/Proyecto_Final_Encriptador_Aleatorio/encriptador.vhd)</CurrentItem>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Implement Design</ClosedNode>
+         <ClosedNode>Synthesize - XST</ClosedNode>
+         <ClosedNode>User Constraints</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem></SelectedItem>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000c9000000010000000100000000000000000000000064ffffffff000000810000000000000001000000c90000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem></CurrentItem>
+   </ItemView>
+   <ItemView guiview="File" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000000000000001000000000000000000000000000000000000027d000000040101000100000000000000000000000064ffffffff000000810000000000000004000000e00000000100000000000000bb00000001000000000000007600000001000000000000006c0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>C:\Users\hamza\Desktop\PROYECTO ARQUITECTURA\Proyecto_Final_Encriptador_Aleatorio_Instruccion\Proyecto_Final_Encriptador_Aleatorio\arithmatic.vhd</CurrentItem>
+   </ItemView>
+   <ItemView guiview="Library" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>work</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems/>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000109000000010001000100000000000000000000000064ffffffff000000810000000000000001000001090000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem>work</CurrentItem>
+   </ItemView>
+   <SourceProcessView>000000ff0000000000000002000000df000000df01000000050100000002</SourceProcessView>
+   <CurrentView>Implementation</CurrentView>
+   <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>Design Utilities</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem/>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000000000000000000023d000000010000000100000000000000000000000064ffffffff0000008100000000000000010000023d0000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem/>
+   </ItemView>
+   <ItemView engineview="SynthesisOnly" sourcetype="DESUT_UCF" guiview="Process" >
+      <ClosedNodes>
+         <ClosedNodesVersion>1</ClosedNodesVersion>
+         <ClosedNode>User Constraints</ClosedNode>
+      </ClosedNodes>
+      <SelectedItems>
+         <SelectedItem/>
+      </SelectedItems>
+      <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
+      <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000000000000000000290000000010000000100000000000000000000000064ffffffff000000810000000000000001000002900000000100000000</ViewHeaderState>
+      <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
+      <CurrentItem/>
+   </ItemView>
+</Project>

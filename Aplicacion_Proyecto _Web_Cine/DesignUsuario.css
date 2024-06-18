@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(26, 25, 25);
+    margin: 0;
+    padding: 0;
+    color: orangered;
+}
+
+
+#menu a {
+    float: left;
+    background-color: #333;
+    display: block;
+    color: orangered;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+
+#menu a:hover {
+    background-color: rgb(103, 100, 100);
+    overflow: hidden;
+    float: left;
+    display: block;
+    color: orangered;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+
+#user-info {
+    float: right;
+    margin: 10px;
+    text-align: center;
+
+}
+
+#user-info img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin-right: 20px;
+
+}
+
+#user-table {
+    border-collapse: collapse;
+}
+
+#user-table td {
+    padding: 8px;
+    border: 1px solid orangered;
+}
+
+h1 {
+    margin-top: 50px;
+    text-align: center;
+}
