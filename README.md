@@ -45,7 +45,6 @@ Procesador Microblaze: Proyectos en ensamblador para el desarrollo de aplicacion
 Proyectos de Software
 - Multimedia_Web_API
 - Aplicacion_Proyecto _Web_Cine
-- 
 
 Aplicaciones Web:
 
